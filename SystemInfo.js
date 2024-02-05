@@ -193,17 +193,17 @@ var	NowTime,
 var	FSO = WScript.CreateObject("Scripting.FileSystemObject");
 var openText = FSO.OpenTextFile(logPath + UserLogin + "_" + Machine + ".LOG", 8, true, -1);
 
-	openText.WriteLine("Time: " 		+ NowTime 		+ "\n\n"+
-                 	   "FIO: " 			+ FIO 			+ "\n" +
-                       "PC name: "		+ Machine	    + "\n" +
-                 	   "RAM: " 			+ TotalRam 		+ "\n" +
-                 	   "OS: " 			+ OS 			+ "\n" + 
-				 	   "bit: "			+ OSbit			+ "\n" +
+	openText.WriteLine("Time: " 		+ NowTime 	+ "\n\n"+
+                	   "FIO: " 		+ FIO 		+ "\n" +
+                     	   "PC name: "		+ Machine   	+ "\n" +
+                 	   "RAM: " 		+ TotalRam 	+ "\n" +
+                 	   "OS: " 		+ OS 		+ "\n" + 
+		 	   "bit: "		+ OSbit		+ "\n" +
         	           "Processor: "	+ Processor 	+ "\n" + 
-				 	   "IP: "			+ NetCard	    + "\n" +
-					   "Disks: " 		+ LocalDrives	+ "\n" +
-				 	   "Progs: "		+ Programs		+ "\n" +
-					   "Printer: " 		+ Printer 
-				 );
+		 	   "IP: "		+ NetCard	+ "\n" +
+			   "Disks: " 		+ LocalDrives	+ "\n" +
+		 	   "Progs: "		+ Programs	+ "\n" +
+			   "Printer: " 		+ Printer 
+			   );
 
 	openText.Close();
