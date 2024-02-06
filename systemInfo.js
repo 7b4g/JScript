@@ -1,7 +1,7 @@
 // path where .log file will be create
 var logPath = "YOUR PATH";
 
-// do not change this
+// connect to local wmi 
 var wmi = GetObject("winmgmts:");
 
 // values 
@@ -19,7 +19,7 @@ var	NowTime,
 	Programs,
 	Printer;
 
-	// 
+	//  date
 	var d = new Date, mon, day;
 
 	mon = "" + (d.getMonth()+1);
@@ -33,7 +33,7 @@ var	NowTime,
 	NowTime =  d.getHours()+":"+d.getMinutes()+":"+d.getSeconds() + " " + day + "." + mon + "."+d.getFullYear();
 
 
-	// 
+	// RAM
 	var	query = wmi.ExecQuery("Select * from Win32_PhysicalMemory");		
 	var accitem; 
 
@@ -45,7 +45,7 @@ var	NowTime,
 	}
 
 
-	//  
+	// OS, FIO, PC name, user login 
 	query = wmi.ExecQuery("SELECT * FROM Win32_OperatingSystem");
 
 	for(var acc = new Enumerator(query); !acc.atEnd(); acc.moveNext()) {
@@ -58,7 +58,7 @@ var	NowTime,
 	OSbit = accitem.OSArchitecture.split("-")[0];
 
 
-	// 
+	// processor
 	query = wmi.ExecQuery("SELECT * FROM Win32_Processor"); 	
 
 	for(var acc = new Enumerator(query); !acc.atEnd(); acc.moveNext()) {
@@ -77,7 +77,7 @@ var	NowTime,
 	}
 
 
-	// 
+	// hard drive
 	query = wmi.ExecQuery("SELECT * FROM Win32_LogicalDisk WHERE DriveType = 3 and Size != NULL"); 	
 
 	LocalDrives = "";
@@ -89,7 +89,8 @@ var	NowTime,
 	}
 
 
-	// 
+	// check installed programs
+	// change "Program1 name" to your value
 	query = wmi.ExecQuery("SELECT * FROM Win32_Product");
 
 	Programs = "";
@@ -105,7 +106,7 @@ var	NowTime,
 	}
 
 	
-	// 
+	// detect monitor model (in progress)
 	query = wmi.ExecQuery("SELECT * FROM Win32_")
 
 	var Mmodels = {
@@ -179,7 +180,7 @@ var	NowTime,
 
 
 
-	// 
+	// printer + port
 	query = wmi.ExecQuery("SELECT * FROM Win32_Printer");
 
 	Printer = ""
@@ -189,21 +190,21 @@ var	NowTime,
 	}
 
 
-//
+// info output
 var	FSO = WScript.CreateObject("Scripting.FileSystemObject");
 var openText = FSO.OpenTextFile(logPath + UserLogin + "_" + Machine + ".LOG", 8, true, -1);
 
-	openText.WriteLine("Time: " 		+ NowTime 	+ "\n\n"+
-                	   "FIO: " 		+ FIO 		+ "\n" +
-                     	   "PC name: "		+ Machine   	+ "\n" +
-                 	   "RAM: " 		+ TotalRam 	+ "\n" +
-                 	   "OS: " 		+ OS 		+ "\n" + 
-		 	   "bit: "		+ OSbit		+ "\n" +
-        	           "Processor: "	+ Processor 	+ "\n" + 
-		 	   "IP: "		+ NetCard	+ "\n" +
-			   "Disks: " 		+ LocalDrives	+ "\n" +
-		 	   "Progs: "		+ Programs	+ "\n" +
-			   "Printer: " 		+ Printer 
+	openText.WriteLine("Time: " 		+ NowTime 		+ "\n\n"+
+    					"FIO: " 		+ FIO 			+ "\n" +
+    					"PC name: "		+ Machine   	+ "\n" +
+    					"RAM: " 		+ TotalRam 		+ "\n" +
+    					"OS: " 			+ OS 			+ "\n" + 
+						"bit: "			+ OSbit			+ "\n" +
+    					"Processor: "	+ Processor 	+ "\n" + 
+						"IP: "			+ NetCard		+ "\n" +
+						"Disks: " 		+ LocalDrives	+ "\n" +
+						"Progs: "		+ Programs		+ "\n" +
+						"Printer: " 	+ Printer 
 			   );
 
 	openText.Close();
